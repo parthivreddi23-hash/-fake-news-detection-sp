@@ -6,7 +6,7 @@ from sklearn.linear_model import LogisticRegression
 # -------------------------------
 # Sample Twitter Data (Training)
 # -------------------------------
-fake_tweets = [
+tweets = [
     "Click here to win $5,000 cash instantly!",
     "CONGRATULATIONS! You have been selected for a free iPhone 15.",
     "You are our 1,000,000th visitor, click to claim your prize now.",
