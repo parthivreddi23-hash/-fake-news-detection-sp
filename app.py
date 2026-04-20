@@ -77,7 +77,7 @@ if st.button("Analyze Tweet"):
         st.write(f"Tweet Length: {len(user_input.split())} words")
 
         # Red flag keywords
-        fake_keywords = ["click", "win", "free", "lottery", "shocking","freebies"]
+        fake_keywords = ["click", "win", "free", "lottery", "shocking","freebies","accidents"]
 
         detected_flags = [word for word in fake_keywords if word in cleaned_input]
 
