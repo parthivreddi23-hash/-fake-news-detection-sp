@@ -18,7 +18,7 @@ tweets = [
 labels = [1, 1, 0, 0, 1, 0]
 
 # -------------------------------
-# Preprocessing (as per report)
+# Preprocessing
 # -------------------------------
 def clean_text(text):
     text = text.lower()
@@ -43,8 +43,7 @@ model.fit(X, labels)
 # UI (User Input Module)
 # -------------------------------
 st.title("🐦 Fake News Detection on Twitter")
-
-st.write("Enter a tweet to analyze whether it is REAL or FAKE")
+st.write("Enter a tweet to analyze whether it is **REAL** or **FAKE**")
 
 user_input = st.text_area("Enter Tweet")
 
@@ -58,7 +57,6 @@ if st.button("Analyze Tweet"):
 
         prediction = model.predict(vector)
         prob = model.predict_proba(vector)
-
         confidence = max(prob[0]) * 100
 
         # Output Result
@@ -68,18 +66,31 @@ if st.button("Analyze Tweet"):
             st.error(f"❌ Fake Tweet (Confidence: {confidence:.2f}%)")
 
         # -------------------------------
-        # EXTRA FEATURES (FOR REPORT)
+        # EXTRA FEATURES (REVISED KEYWORDS)
         # -------------------------------
-
         st.subheader("🔍 Analysis")
 
         # Tweet Length
         st.write(f"Tweet Length: {len(user_input.split())} words")
 
-        # Red flag keywords
-        fake_keywords = ["click", "win", "free", "lottery", "shocking","freebies","accidents"]
+        # Expanded Red Flag Keywords (Approx. 75 keywords)
+        fake_keywords = [
+            "click", "win", "free", "lottery", "shocking", "freebies", "accidents",
+            "money", "cash", "prize", "crypto", "bitcoin", "giveaway", "bonus",
+            "urgent", "immediately", "secret", "hidden", "truth", "exposed",
+            "scandal", "leaked", "miracle", "cure", "weight loss", "billionaire",
+            "investment", "guaranteed", "risk-free", "double", "triple", "easy",
+            "simple", "amazing", "unbelievable", "wow", "omg", "alert", "warning",
+            "scam", "fraud", "hack", "phishing", "login", "password", "verify",
+            "account", "suspended", "exclusive", "offer", "discount", "coupon",
+            "voucher", "claim", "register", "signup", "subscribe", "clickhere",
+            "linkinbio", "followback", "followers", "retweets", "share", "viral",
+            "breaking", "insider", "classified", "dying", "dead", "unreal", 
+            "congratulations", "inheritance", "payment", "bank", "transfer"
+        ]
 
-        detected_flags = [word for word in fake_keywords if word in cleaned_input]
+        # Detection logic
+        detected_flags = [word for word in fake_keywords if word in cleaned_input.split()]
 
         if detected_flags:
             st.warning(f"⚠️ Suspicious Words Detected: {', '.join(detected_flags)}")
@@ -88,11 +99,10 @@ if st.button("Analyze Tweet"):
 
         # Simple reasoning
         st.subheader("🧠 Reasoning")
-
         if prediction[0] == 0:
-            st.write("This tweet contains clickbait or promotional patterns commonly seen in fake news.")
+            st.write("This tweet contains patterns commonly associated with clickbait, scams, or sensationalism.")
         else:
-            st.write("This tweet appears formal and informational, which is typical of real news.")
+            st.write("This tweet follows a formal and informational structure typical of verified news sources.")
 
     else:
         st.warning("Please enter a tweet")
