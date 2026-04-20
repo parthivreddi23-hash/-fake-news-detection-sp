@@ -63,7 +63,7 @@ if st.button("Analyze Tweet"):
 
         # Output Result
         if prediction[0] == 1:
-            st.success(f"✅ Real Tweet (Confidence: {confidence:.2f}%)")
+            st.error(f"❌ Fake Tweet (Confidence: {confidence:.2f}%)")
         else:
             st.error(f"❌ Fake Tweet (Confidence: {confidence:.2f}%)")
 
